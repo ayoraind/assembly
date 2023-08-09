@@ -1,5 +1,13 @@
 # GHRU SPAdes Assembly workflow
-This pipeline is forked from the [CGPS assembly pipeline](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/tree/master) written by [Anthony Underwood](https://gitlab.com/antunderwood). I needed to include the possibility of using the conda profile instead of docker or singularity alone, based on the fact that I don't have root access to the server I currently use (2023).
+This pipeline is forked from the [CGPS assembly pipeline](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/tree/master) written by [Anthony Underwood](https://gitlab.com/antunderwood). I needed to include the possibility of using the conda profile instead of docker or singularity alone (and tweak the codes in the modules directory and lines in the config files a bit), based on the fact that I don't have root access to the server I currently use (2023).
+
+It would be best to download the confindr database [here](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/blob/master/Docker/confindr_database.tar.gz) into a directory of your choice, unzip, and untar. An example code is found below:
+```
+curl https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly.git/gitlab-lfs/objects/87baec8d61603b511c8f26a92ed67b95974c2ade68bd0198dbe0cfe42c426b48 -o confindr_database.tar.gz
+
+tar xfz /path/to/confindr_database.tar.gz && rm /path/to/confindr_database.tar.gz && chmod -R o+w /path/to/confindr_database
+
+```
 
 This [Nextflow](https://www.nextflow.io/) workflow can be used to process short read fastq files an assembly pipeline using the [SPAdes assembler](http://cab.spbu.ru/software/spades/). Alongside this it will QC the reads before and after trimming and QC the final assembled scaffolds file using [Quast](http://quast.sourceforge.net/quast).
 The pipeline was based on Shovill (Thanks to Torsten Seemann @torstenseemann): https://github.com/tseemann/shovill
@@ -47,7 +55,7 @@ Optional arguments include
   - `--careful` Turn on the SPAdes careful option which improves assembly by mapping the reads back to the contigs
   - `--minimum_scaffold_length` The minimum length of a scaffold to keep. Others will be filtered out. Default 500 
   - `--minimum_scaffold_depth` The minimum depth of coverage a scaffold must have in order to be kept. Others will be filtered out. Default 3 
-  - `--confindr_db_path` The path to the confindr database. If not set assumes use of the Docker image where the path is '/confindr_database'
+  - `--confindr_db_path` The path to the confindr database. If not set assumes that the path is "${baseDir}/Docker/confindr_database". ${baseDir} in this case signify the file path to the nextflow pipeline.
   - `--qc_conditions` Path to a YAML file containing pass/warning/fail conditions used by [QualiFyr](https://gitlab.com/cgps/qualifyr). An example of the format can be seen [here](qc_conditions.yml) and [another](qc_conditions_nextera_relaxed.yml)  more suitable for reads generated from a Nextera library preparation
   - `--prescreen_genome_size_check` Size in bp of the maximum estimated genome to assemble. Without this any size genome assembly will be attempted
   - `--prescreen_file_size_check` Minumum size in Mb for the input fastq files. Without this any size of file will be attempted (this and prescreen_genome_size_check are mutually exclusive)
