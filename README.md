@@ -1,5 +1,5 @@
 # GHRU SPAdes Assembly workflow
-This pipeline is forked from the [CGPS assembly pipeline](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/tree/master) written by [Anthony Underwood](https://gitlab.com/antunderwood). I needed to include the possibility of using the conda profile instead of docker or singularity alone (and tweak the codes in the modules directory and lines in the config files a bit), based on the fact that I don't have root access to the server I currently use (2023).
+This pipeline is git cloned from the [CGPS assembly pipeline](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/tree/master) written by [Anthony Underwood](https://gitlab.com/antunderwood). I needed to include the possibility of using the conda profile instead of docker or singularity alone (and tweak the codes in the modules directory and lines in the config files a bit), based on the fact that I don't have root access to the server I currently use (2023).
 
 It would be best to download the confindr database [here](https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly/-/blob/master/Docker/confindr_database.tar.gz) into a directory of your choice, unzip, and untar. An example code is found below:
 ```
