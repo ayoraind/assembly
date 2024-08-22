@@ -2,7 +2,6 @@ name: assembly
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
   - mash=2.1
   - fastqc=0.11.9
